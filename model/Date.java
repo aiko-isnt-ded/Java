@@ -83,13 +83,32 @@ public class Date {
     }
 
     // ============================
+    // Getters
+    // ============================
+
+    public int getDay() {
+        return this.day;
+    }
+
+    public int getMonth() {
+        return this.month;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    public String getMonthName() {
+        return this.monthName;
+    }
+
+    public int getFormat() {
+        return this.format;
+    }
+
+    // ============================
     // Methods
     // ============================
-    public void print() {
-        System.out.println(this.day + "-" + this.month + "-" + this.year + ". " +
-                            this.monthName + ", " + this.format 
-        );
-    }
 
     // String
     @Override
@@ -100,7 +119,55 @@ public class Date {
             case 2 -> String.format("%d de %s de %s", day, monthName.toLowerCase(), year);
             default -> String.format("%02d/%02d/%02d", day, month, year % 100);
         };
-        // return String.format("{red: %d, green: %d, blue: %d. Name: %s}", 
-                                // this.red, this.green, this.blue, this.name);
     } 
+
+    // Equals
+    @Override 
+    public boolean equals(Object obj) {
+        // En caso de que no pertenezca a la clase
+        if (!(obj instanceof Date)) return false;
+        
+        // Parsear a Date
+        Date d = (Date) obj;
+
+        // Checar si es igual
+        return 
+        d.getDay() == this.day &&
+        d.getMonth() == this.month &&
+        d.getYear() == this.year;
+    }
+
+    // Clone
+    public Date clone() {
+        return new Date(this.day, this.month, this.year, this.format);
+    }
+
+    // Get Next Day
+    public void next() {
+        // Get maxDay for each month
+        int maxDay = switch(this.month) {
+            case 2 -> 28;
+            case 4, 6, 9, 11 -> 30;
+            default -> 31;          // Since the default is January & January has 31 days
+        }; 
+
+        // If current day is smaller than maxDay
+        if (this.day < maxDay) {
+            this.day++;
+        } 
+        else {
+            // Current day IS maxDay
+            this.day = 1;
+
+            // Month is less than 12
+            if (this.month < 12) {
+                this.setMonth(this.month+1);
+            }
+            // Month IS 12
+            else {
+                this.setMonth(1);
+                this.year++;
+            }
+        }
+    }
 }
