@@ -87,8 +87,15 @@ public class RGBColor {
     }
 
     // Get RGB in bits: | operator concatenates bits
-    public int getRGB() {
+    // Funciona para la clase
+    public static int getRGB(int red, int blue, int green) {
         return (red<<16) | (green>>8) | (blue);
+    }
+
+    // Get RGB in bits: | operator concatenates bits
+    // Funciona para el objeto
+    public int getRGB() {
+        return getRGB(this.red, this.blue, this.green);
     }
 
     // Other Methods
@@ -99,7 +106,8 @@ public class RGBColor {
     // String
     @Override
     public String toString() {
-        return String.format("{red: %d, green: %d, blue: %d. Name: %s}", this.red, this.green, this.blue, this.name);
+        return String.format("{red: %d, green: %d, blue: %d. Name: %s}", 
+                                this.red, this.green, this.blue, this.name);
     } 
 
     // Equals
@@ -119,9 +127,19 @@ public class RGBColor {
         c.getName().equals(this.name);
     }
 
+    // Greyscale
+    public static int getGreyScale(RGBColor c) {
+        int grey = (int) ((0.299 * c.getRed()) + (0.587 * c.getGreen()) + (0.114 * c.getBlue()));
+        return grey;
+    }
+
     // Clone
     public RGBColor clone() {
         return new RGBColor(this.red, this.green, this.blue, this.name);
+    }
+
+    public RGBColor RED() {
+        return new RGBColor(255, 0, 0);
     }
 
 }

@@ -16,6 +16,10 @@ public class TestColor {
         System.out.printf("%06X\n", c1.getRGB());
         System.out.println(c1.toString());
 
+        int rgb = RGBColor.getRGB(127, 90, 200);
+        System.out.printf("%06X\n", rgb);
 
+        int grey = RGBColor.getGreyScale(c1);
+        System.out.println(grey);
     }
 }
